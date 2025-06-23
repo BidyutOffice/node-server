@@ -1,0 +1,13 @@
+<%- include("common/header") %>
+
+    <h1>show here about page content</h1>
+
+    <ul>
+        <% cities.forEach((c)=> {%>
+            <li>
+                <%= c %>
+            </li>
+            <% }) %>
+    </ul>
+
+    <%- include("common/footer") %>

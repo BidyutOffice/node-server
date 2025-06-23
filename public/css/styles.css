@@ -1,0 +1,15 @@
+h1 {
+    color: red;
+}
+
+body {
+    background-color: yellow;
+}
+
+footer,
+header {
+    text-align: center;
+    background-color: yellowgreen;
+    padding: 20px;
+    text-transform: uppercase;
+}
