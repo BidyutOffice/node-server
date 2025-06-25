@@ -29,15 +29,8 @@ module.exports = {
         }
     },
     destroy: async (req, res) => {
-        const { id } = req.params;
+        const { user } = req;
         try {
-            if (!id) {
-                return res.status(400).json({ success: false, message: "Provide a user Id", })
-            }
-            const user = await User.findById(id);
-            if (!user) {
-                return res.status(404).json({ success: false, message: "User not found", })
-            }
             await user.deleteOne();
             return res.status(200).json({ success: true, message: "user deleted", })
 
@@ -47,12 +40,8 @@ module.exports = {
         }
     },
     show: async (req, res) => {
-        const { id } = req.params;
+        const { user } = req
         try {
-            const user = await User.findById(id).select("_id name email");
-            if (!user) {
-                return res.status(404).json({ success: false, message: "User not found", })
-            }
             return res.status(200).json({
                 success: true,
                 message: "successfull",
@@ -63,6 +52,20 @@ module.exports = {
             return res.status(500).json({ message: "Internal Server Error!" })
         }
     },
-    edit: async () => {
+    edit: async (req, res) => {
+        const { name } = req.body;
+        const { user } = req
+
+        try {
+            if (!name) {
+                return res.status(400).json({ success: false, message: "please provide a name" });
+            }
+            const result = await user.updateOne({ name });
+            return res.status(200).json({ success: true, message: "user updated" });
+
+        } catch (e) {
+            console.log("Error Edit user: " + e.message);
+            return res.status(500).json({ message: "Internal Server Error!" })
+        }
     }
 }
